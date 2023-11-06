@@ -9,3 +9,12 @@ export interface MyResponse extends Response {
   code?: number;
   message?: string;
 }
+
+export type Data = {
+  name: string,
+  address: string,
+  vegOnly: boolean,
+  cost: string,
+  cuisineTypes: string[],
+  isOpen: boolean,
+}

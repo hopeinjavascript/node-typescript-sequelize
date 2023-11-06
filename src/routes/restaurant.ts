@@ -2,6 +2,8 @@ import express, { Router } from 'express';
 
 import restaurantController from './../controllers/restaurant';
 
+import {validateCreateRestaurantSchema, validateUpdateRestaurantSchema} from './../validations/restaurants'
+
 const router: Router = express.Router();
 
 /*
@@ -11,12 +13,12 @@ const router: Router = express.Router();
 router
   .route('/')
   .get(restaurantController.getAllRestaurants)
-  .post(restaurantController.createRestaurant);
+  .post(validateCreateRestaurantSchema, restaurantController.createRestaurant);
 
 router
   .route('/:id')
   .get(restaurantController.getSingleRestaurant)
-  .patch(restaurantController.updateRestaurant)
+  .patch(validateUpdateRestaurantSchema, restaurantController.updateRestaurant)
   .delete(restaurantController.deleteRestaurant);
 
 export default router;

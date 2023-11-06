@@ -27,7 +27,7 @@ export default function errorHandler(
     serviceName: res.serviceName || 'Service name not provided!',
     code: err.code || 500, //HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
     message: err.message || 'Internal Server Error',
-    data: err.data || '',
+   ...err.data && { data: err.data},
     name: err.name,
     stack: err.stack,
   };

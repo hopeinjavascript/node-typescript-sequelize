@@ -5,13 +5,15 @@ const Restaurant = sequelize.define(
   'Restaurant',
   {
     id: {
-      type: DataTypes.UUIDV4,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       primaryKey: true,
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true
     },
     address: {
       type: DataTypes.STRING,
@@ -19,34 +21,43 @@ const Restaurant = sequelize.define(
     },
     vegOnly: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true,
+      allowNull: false,
+      defaultValue: true
     },
     cost: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     cuisineTypes: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
+      type: DataTypes.STRING,
+      allowNull: false,
+      get(): string[] {
+        return this.getDataValue('cuisineTypes').split(',')
+      },
+      set(val: string[]){
+        this.setDataValue('cuisineTypes', val.join(','))
+      }
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: Date.now(),
+      defaultValue: new Date(),
+      allowNull: false,
     },
     updatedAt: {
       type: DataTypes.DATE,
-      defaultValue: Date.now(),
+      defaultValue: new Date(),
+      allowNull: false,
     },
     isOpen: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
+      allowNull: false,
     },
   },
   {
     indexes: [{ unique: true, fields: ['id'] }],
   }
 );
-
-// `sequelize.define` also returns the model
-console.log('hmm', Restaurant === sequelize.models.Book); // true
 
 // Restaurant.sync().then(console.log).catch(console.error);
 

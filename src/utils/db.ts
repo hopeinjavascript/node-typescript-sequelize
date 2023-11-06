@@ -1,71 +1,58 @@
 import Restaurant from '../models/restaurant';
+import { Data } from '../types';
+
+async function insert(dataToInsert: Data) {
+  return await Restaurant.create(dataToInsert);
+}
+
+async function insertMany(dataToInsert: Data[] ) {
+  return await Restaurant.bulkCreate(dataToInsert, {
+    updateOnDuplicate: ["name"],
+    ignoreDuplicates: true,
+  });
+}
 
 async function findAll(filter = {}) {
-  try {
-    return await Restaurant.findAll(filter);
-  } catch (error) {
-  } finally {
-  }
+  return await Restaurant.findAll(filter);
 }
 
 async function findById(id: string) {
-  try {
-    return await Restaurant.findByPk(id);
-  } catch (error) {
-  } finally {
-  }
+  return await Restaurant.findByPk(id);
 }
 
 async function deleteMany(filter: {}) {
-  try {
-    return await Restaurant.destroy({
-      where: filter,
-    });
-  } catch (error) {
-  } finally {
-  }
+  return await Restaurant.destroy({
+    where: filter,
+  });
 }
 
 async function deleteById(id: string) {
-  try {
-    return await Restaurant.destroy({
-      where: { id },
-    });
-  } catch (error) {
-  } finally {
-  }
+  return await Restaurant.destroy({
+    where: { id },
+  });
 }
 
-async function truncate(id: string) {
-  try {
-    return await Restaurant.destroy({
-      truncate: true,
-    });
-  } catch (error) {
-  } finally {
-  }
+async function truncate() {
+  return await Restaurant.destroy({
+    truncate: true,
+  });
 }
 
 async function update(fieldsToUpdate: {}, filter: {}) {
-  try {
-    return await Restaurant.update(fieldsToUpdate, {
-      where: { filter },
-    });
-  } catch (error) {
-  } finally {
-  }
+  return await Restaurant.update(fieldsToUpdate, {
+    where: { filter },
+  });
 }
 async function updateById(fieldsToUpdate: {}, id: string) {
-  try {
-    return await Restaurant.update(fieldsToUpdate, {
-      where: { id },
-    });
-  } catch (error) {
-  } finally {
-  }
+  const result =  await Restaurant.update(fieldsToUpdate, {
+    where: { id },
+  });
+  return result[0]
 }
 
 export default {
+  insert,
+  insertMany,
   findAll,
   findById,
   deleteMany,

@@ -1,30 +1,36 @@
+### test
 GET http://localhost:5000
 Content-Type: application/json
 
-###
+### get all
 GET http://localhost:5000/restaurant
 Content-Type: application/json
 
-###
+### create
 POST http://localhost:5000/restaurant
 Content-Type: application/json
 
 {
-
+    "name": "res 2",
+    "address": "res 2 add",
+    "vegOnly": false,
+    "cost": "350",
+    "cuisineTypes": ["indian", "thai"],
+    "isOpen": true
 }
 
-###
-GET http://localhost:5000/restaurant/:id
+### get single
+GET http://localhost:5000/restaurant/fed03f78-744d-47c0-bb14-60ca52b475e7
 Content-Type: application/json
 
-###
-PATCH http://localhost:5000/restaurant/:id
+### update single
+PATCH http://localhost:5000/restaurant/
 Content-Type: application/json
 
 {
-
+    "address": "res 1 address"
 }
 
-###
-DELETE  http://localhost:5000/restaurant/:id
+### delete single
+DELETE  http://localhost:5000/restaurant/
 Content-Type: application/json

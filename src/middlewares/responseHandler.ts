@@ -18,7 +18,7 @@ export default function responseHandler(
     serviceName: res.serviceName || 'Service name not provided!',
     code: res.code || 500, //HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR,
     message: res.message || 'Internal Server Error',
-    data: res.data || '',
+    ...res.data && { data: res.data},
   };
 
   res.status(200).json(RESP_OBJ);
