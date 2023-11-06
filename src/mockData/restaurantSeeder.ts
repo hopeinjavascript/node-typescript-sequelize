@@ -16,6 +16,14 @@ const data: Data[] = [
         cost: "350",
         cuisineTypes: ["thai", "indian"],
         isOpen: true
+    },
+    {
+        name: "res 3",
+        address: "res 3 add",
+        vegOnly: false,
+        cost: "600",
+        cuisineTypes: ["spanish", "morrocon"],
+        isOpen: true
     }
 ]
 

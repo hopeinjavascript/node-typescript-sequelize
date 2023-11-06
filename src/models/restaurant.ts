@@ -32,7 +32,7 @@ const Restaurant = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
       get(): string[] {
-        return this.getDataValue('cuisineTypes').split(',')
+        return this.getDataValue('cuisineTypes')?.split(',')
       },
       set(val: string[]){
         this.setDataValue('cuisineTypes', val.join(','))
