@@ -8,7 +8,7 @@ function setResponse(res: any) {
   }
 }
 
- function throwError(msg: string, code?: number, data?: any): { [key: string]: any } {
+function throwError(msg: string, code?: number, data?: any): { [key: string]: any } {
   const errObj: CustomError = new Error(msg);
   errObj.code = code;
   if(data) {
@@ -18,7 +18,12 @@ function setResponse(res: any) {
   return errObj;
 }
 
+function getObjectLength(obj: {}) {
+  return obj.constructor.name === "Object" && Object.keys(obj).length
+}
+
 export default {
   setResponse,
-  throwError
+  throwError,
+  getObjectLength
 }

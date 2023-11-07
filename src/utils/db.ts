@@ -31,9 +31,9 @@ async function findAll(filter: TRestaurantOptional) {
           arr.push({[Op.like]: `%${val}%`})
         } 
         where[key] = { [Op.or] : arr }
-      } else { // AND default
+      } else {
         // where[key] = { [Op.like] : `%${value}%`}
-        value = value.split(',')
+        value = value.split(',') // AND (default)
         for (const val of value) {
           arr.push({[Op.like]: `%${val}%`})
         } 

@@ -11,12 +11,14 @@ const getAllRestaurants = async (
   res.serviceName = "getAllRestaurants"
 
   const query = req.query;
+
+  let msg = genHelpers.getObjectLength(query) ? 'There are no restaurants for given search criteria' : 'There are no restaurants'
   
   try {
     const restaurants = await db.findAll(query);
 
     if (!restaurants?.length) {
-      genHelpers.setResponse(res)('There are no restaurants', 500);
+      genHelpers.setResponse(res)(msg, 500);
       next()
     }
 
