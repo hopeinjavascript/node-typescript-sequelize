@@ -1,45 +1,43 @@
 import { Request, Response, NextFunction } from 'express';
 import db from './../utils/db';
 import genHelpers from './../helpers/generic';
-
-interface MyResponse extends Response {
-  data?: any;
-  code?: number;
-  message?: string;
-  serviceName?: string;
-}
+import { CustomResponse } from '../types';
 
 const getAllRestaurants = async (
   req: Request,
-  res: MyResponse,
+  res: CustomResponse,
   next: NextFunction
 ) => {
   res.serviceName = "getAllRestaurants"
+
+  const query = req.query;
   
   try {
-    const restaurants = await db.findAll();
+    const restaurants = await db.findAll(query);
 
-    if (!restaurants?.length)
-      return genHelpers.setResponse(res)('There are no restaurants', 500);
-
+    if (!restaurants?.length) {
+      genHelpers.setResponse(res)('There are no restaurants', 500);
+      next()
+    }
 
     genHelpers.setResponse(res)('Restaurants', 200, restaurants)
     next();
   } catch (error) {
-    console.log('---here---')
     const errObj = genHelpers.throwError('Encountered issue while getting all restaurants', 500, error)
     next(errObj);
   }
 };
 
-const createRestaurant = async (req: Request, res: MyResponse, next: NextFunction) => {
+const createRestaurant = async (req: Request, res: CustomResponse, next: NextFunction) => {
   res.serviceName = "createRestaurant"
 
   try {
     const newRestaurant = await db.insert(req.body);
 
-    if(!newRestaurant)
-      return genHelpers.setResponse(res)('Cannot insert new restaurant', 500);
+    if(!newRestaurant){
+      genHelpers.setResponse(res)('Cannot insert new restaurant', 500);
+      next()
+    }
 
     genHelpers.setResponse(res)('New restaurant created', 200, newRestaurant)
     next();
@@ -51,7 +49,7 @@ const createRestaurant = async (req: Request, res: MyResponse, next: NextFunctio
 
 const getSingleRestaurant = async (
   req: Request,
-  res: MyResponse,
+  res: CustomResponse,
   next: NextFunction
 ) => {
   res.serviceName = "getSingleRestaurant"
@@ -61,8 +59,10 @@ const getSingleRestaurant = async (
   try {
     const restuarant = await db.findById(restaurantId);
 
-    if(!restuarant)
-      return genHelpers.setResponse(res)('Restaurant not found with id -' + restaurantId, 400);
+    if(!restuarant) {
+      genHelpers.setResponse(res)('Restaurant not found with id -' + restaurantId, 400);
+      next()
+    }
 
     genHelpers.setResponse(res)('Single restaurant', 200, restuarant)
     next();
@@ -72,7 +72,7 @@ const getSingleRestaurant = async (
   }
 };
 
-const updateRestaurant = async (req: Request, res: MyResponse, next: NextFunction) => {
+const updateRestaurant = async (req: Request, res: CustomResponse, next: NextFunction) => {
   res.serviceName = "updateRestaurant"
 
   const restaurantId = req.params.id
@@ -80,9 +80,11 @@ const updateRestaurant = async (req: Request, res: MyResponse, next: NextFunctio
   try {
     const updatedRestaurant = await db.updateById(req.body, restaurantId);
 
-    if(!updatedRestaurant)
-      return genHelpers.setResponse(res)('Cannot update restaurant with id -' + restaurantId, 400);
+    if(!updatedRestaurant){
 
+      genHelpers.setResponse(res)('Cannot update restaurant with id -' + restaurantId, 400);
+      next()
+    }
 
     genHelpers.setResponse(res)('Restaurant updated with id -' + restaurantId, 200, updatedRestaurant)
     next();
@@ -92,7 +94,7 @@ const updateRestaurant = async (req: Request, res: MyResponse, next: NextFunctio
   }
 };
 
-const deleteRestaurant = async (req: Request, res: MyResponse, next: NextFunction) => {
+const deleteRestaurant = async (req: Request, res: CustomResponse, next: NextFunction) => {
   res.serviceName = "deleteRestaurant"
 
   const restaurantId = req.params.id
@@ -100,8 +102,10 @@ const deleteRestaurant = async (req: Request, res: MyResponse, next: NextFunctio
   try {
     const deletedRestuarant = await db.deleteById(restaurantId);
 
-    if(!deletedRestuarant)
-      return genHelpers.setResponse(res)('Cannot delete restuarant with id -' + restaurantId, 500);
+    if(!deletedRestuarant) {
+      genHelpers.setResponse(res)('Cannot delete restuarant with id -' + restaurantId, 500);
+      next()
+    }
 
     genHelpers.setResponse(res)('Restaurant deleted with id -' + restaurantId, 200, deletedRestuarant)
     next();

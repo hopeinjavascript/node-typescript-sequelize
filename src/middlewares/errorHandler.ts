@@ -1,22 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
-import { MyError } from './../types/index';
-
-// https://medium.com/@xiaominghu19922/proper-error-handling-in-express-server-with-typescript-8cd4ffb67188
-// https://www.codeconcisely.com/posts/how-to-handle-errors-in-express-with-typescript/
-
-// [INFO] - SKipping callbacks in middleware chain using next('route')
-
-export interface MyResponse extends Response {
-  serviceName?: string;
-  data?: any;
-  code?: number;
-  message?: string;
-}
+import { CustomError, CustomResponse } from './../types';
 
 export default function errorHandler(
-  err: MyError,
+  err: CustomError,
   req: Request,
-  res: MyResponse,
+  res: CustomResponse,
   next: NextFunction
 ) {
   // const code = err?.code || 500,

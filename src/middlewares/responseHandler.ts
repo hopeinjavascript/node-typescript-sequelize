@@ -1,16 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-// import { MyResponse } from '../types';
-
-export interface MyResponse extends Response {
-  serviceName?: string;
-  data?: any;
-  code?: number;
-  message?: string;
-}
+import { CustomResponse } from '../types';
 
 export default function responseHandler(
   req: Request,
-  res: MyResponse,
+  res: CustomResponse,
   next: NextFunction
 ) {
   const RESP_OBJ = {

@@ -1,9 +1,4 @@
-// import { MyResponse } from '../types';
-
-interface CustomError extends Error {
-  code?: number;
-  data?: any;
-}
+import { CustomError } from "../types";
 
 function setResponse(res: any) {
   return (msg: string, code?: number, data?: any ) => {

@@ -6,25 +6,34 @@ Content-Type: application/json
 GET http://localhost:5000/restaurant
 Content-Type: application/json
 
+### get all with filter
+# cuisineTypes - for OR condition use "|" and for AND condition use "," => this url concatenation can be handled in frontend, as an indication to parse in the backend
+# AND
+GET http://localhost:5000/restaurant?cost=low&vegOnly=true&cuisineTypes=italian
+Content-Type: application/json
+# OR
+GET http://localhost:5000/restaurant?cost=low&vegOnly=true&cuisineTypes=italian|indian
+Content-Type: application/json
+
 ### create
 POST http://localhost:5000/restaurant
 Content-Type: application/json
 
 {
-    "name": "res 2",
-    "address": "res 2 add",
+    "name": "res 3",
+    "address": "res 3 add",
     "vegOnly": false,
-    "cost": "350",
-    "cuisineTypes": ["indian", "thai"],
+    "cost": "600",
+    "cuisineTypes": ["spanish", "morrocon"],
     "isOpen": true
 }
 
 ### get single
-GET http://localhost:5000/restaurant/fed03f78-744d-47c0-bb14-60ca52b475e7
+GET http://localhost:5000/restaurant/408f8194-4d49-4c48-864c-30969ce28b57
 Content-Type: application/json
 
 ### update single
-PATCH http://localhost:5000/restaurant/
+PATCH http://localhost:5000/restaurant/408f8194-4d49-4c48-864c-30969ce28b57
 Content-Type: application/json
 
 {
@@ -32,5 +41,5 @@ Content-Type: application/json
 }
 
 ### delete single
-DELETE  http://localhost:5000/restaurant/
+DELETE  http://localhost:5000/restaurant/408f8194-4d49-4c48-864c-30969ce28b57
 Content-Type: application/json
