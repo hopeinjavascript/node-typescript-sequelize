@@ -13,6 +13,7 @@ async function insertMany(dataToInsert: TRestaurant[] ) {
   return await Restaurant.bulkCreate(dataToInsert, {
     updateOnDuplicate: ["name"],
     ignoreDuplicates: true,
+    validate: true
   });
 }
 

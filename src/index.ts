@@ -41,6 +41,7 @@ app.use(errorHandler);
 
     // insert after server is started so that by the time inserts are happening requests can still be served
     // if inserts fail for some reason then error will be caught
+    // although you'll see the msg 'Mock data inserted' eveytime you restart your app but it won't insert dupe records.
     await db.insertMany(restaurantSeeder).then(() => console.log('Mock data inserted')).catch((e: Error) => console.error(e.message))
   } catch (error: any) {
     console.error('Database connection failed - ', error.message);
