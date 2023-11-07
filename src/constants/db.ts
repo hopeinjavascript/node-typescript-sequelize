@@ -7,16 +7,11 @@ type DbConfig = {
 };
 
 const dbConfig: DbConfig = {
-  server: 'localhost', //'sql12.freesqldatabase.com', //'sql12.freemysqlhosting.net',
-  username: 'root', //'sql12659424',
-  password: 'Myroot123$', //'Y9GgY8m69p',
-  database: 'akshaydb',//'sql12659424',
+  server: process.env.DB_HOST ? process.env.DB_HOST: 'localhost',
+  username: process.env.DB_USER ? process.env.DB_USER: 'root',
+  password: process.env.DB_PASSWORD ? process.env.DB_PASSWORD: 'Myroot123$',
+  database: process.env.DB_DATABASE ? process.env.DB_DATABASE: 'akshaydb',
   dialect: 'mysql',
-  // server:'sql12.freesqldatabase.com', //'sql12.freemysqlhosting.net',
-  // username: 'sql12659424',
-  // password:'Y9GgY8m69p',
-  // database:'sql12659424',
-  // dialect: 'mysql',
 };
 
 export default dbConfig;
