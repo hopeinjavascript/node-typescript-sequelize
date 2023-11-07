@@ -19,7 +19,7 @@ const getAllRestaurants = async (
 
     if (!restaurants?.length) {
       genHelpers.setResponse(res)(msg, 500);
-      next()
+      return next();
     }
 
     genHelpers.setResponse(res)('Restaurants', 200, restaurants)
@@ -38,7 +38,7 @@ const createRestaurant = async (req: Request, res: CustomResponse, next: NextFun
 
     if(!newRestaurant){
       genHelpers.setResponse(res)('Cannot insert new restaurant', 500);
-      next()
+      return next();
     }
 
     genHelpers.setResponse(res)('New restaurant created', 200, newRestaurant)
@@ -63,7 +63,7 @@ const getSingleRestaurant = async (
 
     if(!restuarant) {
       genHelpers.setResponse(res)('Restaurant not found with id -' + restaurantId, 400);
-      next()
+      return next();
     }
 
     genHelpers.setResponse(res)('Single restaurant', 200, restuarant)
@@ -83,9 +83,8 @@ const updateRestaurant = async (req: Request, res: CustomResponse, next: NextFun
     const updatedRestaurant = await db.updateById(req.body, restaurantId);
 
     if(!updatedRestaurant){
-
       genHelpers.setResponse(res)('Cannot update restaurant with id -' + restaurantId, 400);
-      next()
+      return next();
     }
 
     genHelpers.setResponse(res)('Restaurant updated with id -' + restaurantId, 200, updatedRestaurant)
@@ -106,7 +105,7 @@ const deleteRestaurant = async (req: Request, res: CustomResponse, next: NextFun
 
     if(!deletedRestuarant) {
       genHelpers.setResponse(res)('Cannot delete restuarant with id -' + restaurantId, 500);
-      next()
+      return next();
     }
 
     genHelpers.setResponse(res)('Restaurant deleted with id -' + restaurantId, 200, deletedRestuarant)
